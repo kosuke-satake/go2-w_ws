@@ -1,0 +1,32 @@
+# Enforce consistent line endings for all text files (normalize to LF)
+* text=auto
+
+# Explicitly mark text file types to be normalized
+*.py text eol=lf
+*.cpp text eol=lf
+*.hpp text eol=lf
+*.h text eol=lf
+*.xml text eol=lf
+*.urdf text eol=lf
+*.xacro text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.sh text eol=lf
+
+# Explicitly mark binary files to prevent normalization damage
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.onnx binary
+*.pt binary
+*.pth binary
+*.stl binary
+*.dae binary
+*.step binary
+*.stp binary

@@ -1,0 +1,20 @@
+# EditorConfig configurations for consistent coding styles
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# XML, YAML, and ROS configurations (standardized to 2 spaces)
+[*.{xml,yaml,yml,urdf,xacro,launch,launch.py}]
+indent_size = 2
+
+# Markdown documentation styling
+[*.md]
+trim_trailing_whitespace = false
+insert_final_newline = true
+indent_size = 4

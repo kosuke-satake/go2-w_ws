@@ -1,0 +1,81 @@
+# ==============================================================================
+# Git Ignore Patterns for Unitree Go2-W Workspace
+# Stack: Python 3.10+, ROS 2 Jazzy, Gazebo, Isaac Lab, PyTorch
+# ==============================================================================
+
+# OS Metadata
+.DS_Store
+Thumbs.db
+*.bak
+*~
+
+# Python Environment & Caching
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.tox/
+.eggs/
+*.egg-info/
+dist/
+build/
+develop-eggs/
+downloads/
+eggs/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+
+# ROS 2 Workspace (Colcon builds)
+install/
+log/
+.colcon/
+build_isolated/
+devel/
+devel_isolated/
+
+# ROS 2 Baggage & Heavy Logs
+*.db3
+*.bag
+*.mcap
+
+# NVIDIA Omniverse & Isaac Lab Artifacts
+logs/
+.isaac/
+*.usd
+*.usda
+*.usdc
+_out/
+out/
+runs/
+*.onnx.bak
+*.pt
+*.pth
+data/
+datasets/
+models/
+
+# Environment Variables & Private Configurations
+.env
+.env.local
+.env.*.local
+*.private
+*.key
+credentials/
+passwd
+secret/
+config/local_config.*
+
+# IDE Configurations
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace

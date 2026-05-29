@@ -1,0 +1,42 @@
+[project]
+name = "go2-w-ws"
+version = "0.1.0"
+description = "Structured learning and simulation workspace for the Unitree Go2-W wheeled-quadruped robot."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Kosuke"}
+]
+
+[tool.ruff]
+# Target Python version matching ROS 2 Jazzy / Ubuntu 24.04 standards
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+# Enable standard Pyflakes (F), Pycodestyle (E, W), and Isort (I) rules
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "N",    # pep8-naming
+    "UP",   # pyupgrade
+    "B",    # flake8-bugbear
+    "A",    # flake8-builtins
+    "C4",   # flake8-comprehensions
+]
+ignore = [
+    "E501", # Ignore line-length limit warnings (handled by formatter)
+]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+known-first-party = ["go2_w"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "lf"
