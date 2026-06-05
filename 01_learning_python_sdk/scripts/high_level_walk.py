@@ -8,8 +8,8 @@ to stand up, execute a slow forward walk, stop, and lie down.
 import argparse
 import sys
 import time
-from unitree_sdk2.core.channel import ChannelFactoryInitialize
-from unitree_sdk2.go2.sport.sport_client import SportClient
+from unitree_sdk2py.core.channel import ChannelFactoryInitialize
+from unitree_sdk2py.go2.sport.sport_client import SportClient
 
 
 def main():

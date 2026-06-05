@@ -8,10 +8,10 @@ and structure target joint motor packets using the PD control law.
 import argparse
 import sys
 import time
-from unitree_sdk2.core.channel import ChannelFactoryInitialize
-from unitree_sdk2.go2.low_level.low_state_client import LowStateClient
+from unitree_sdk2py.core.channel import ChannelFactoryInitialize
+from unitree_sdk2py.go2.low_level.low_state_client import LowStateClient
 # Note: In low-level control, commands are sent via a LowCmdClient
-from unitree_sdk2.go2.low_level.low_cmd_client import LowCmdClient
+from unitree_sdk2py.go2.low_level.low_cmd_client import LowCmdClient
 
 
 def main():

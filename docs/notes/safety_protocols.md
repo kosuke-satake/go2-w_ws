@@ -20,7 +20,7 @@ If the robot behaves unpredictably (e.g., oscillating violently or running towar
 If writing custom low-level or high-level control loops, wrap your main execution inside a `try/except` block to ensure a keyboard interrupt (`Ctrl + C`) triggers the damp command:
 
 ```python
-from unitree_sdk2.go2.sport.sport_client import SportClient
+from unitree_sdk2py.go2.sport.sport_client import SportClient
 
 sport_client = SportClient()
 sport_client.Init()
