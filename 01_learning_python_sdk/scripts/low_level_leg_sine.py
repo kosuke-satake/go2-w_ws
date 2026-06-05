@@ -13,17 +13,21 @@ CRITICAL: Run this test ONLY when the robot chassis is suspended in the air.
 """
 
 import argparse
-import sys
-import time
 import math
-from unitree_sdk2py.core.channel import ChannelPublisher, ChannelSubscriber, ChannelFactoryInitialize
+import time
+
+from unitree_sdk2py.comm.motion_switcher.motion_switcher_client import (
+    MotionSwitcherClient,
+)
+from unitree_sdk2py.core.channel import (
+    ChannelFactoryInitialize,
+    ChannelPublisher,
+    ChannelSubscriber,
+)
 from unitree_sdk2py.idl.default import unitree_go_msg_dds__LowCmd_
-from unitree_sdk2py.idl.default import unitree_go_msg_dds__LowState_
-from unitree_sdk2py.idl.unitree_go.msg.dds_ import LowCmd_
-from unitree_sdk2py.idl.unitree_go.msg.dds_ import LowState_
+from unitree_sdk2py.idl.unitree_go.msg.dds_ import LowCmd_, LowState_
 from unitree_sdk2py.utils.crc import CRC
 from unitree_sdk2py.utils.thread import RecurrentThread
-from unitree_sdk2py.comm.motion_switcher.motion_switcher_client import MotionSwitcherClient
 
 
 # Joint index mapping for Go2-W (12 leg joints, 4 wheel hub motors)
@@ -45,21 +49,21 @@ class LowLevelSineController:
         # PD Gains
         self.kp_hold = 20.0     # Holding gain for other joints
         self.kd_hold = 1.0
-        
+
         self.kp_sweep = 15.0    # Sweeping joint gain
         self.kd_sweep = 0.8
-        
+
         self.kd_wheel = 1.0     # Wheel damping gain
 
         self.low_cmd = unitree_go_msg_dds__LowCmd_()
         self.low_state = None
         self.first_run = True
-        
+
         self.start_pos = [0.0] * 12
         self.crc = CRC()
         self.time_elapsed = 0.0
         self.dt = 0.002  # 500 Hz control loop
-        
+
         self.write_thread = None
         self.motion_switcher = None
         self.lowcmd_publisher = None
@@ -75,7 +79,7 @@ class LowLevelSineController:
         # 2. Setup publisher and subscriber
         self.lowcmd_publisher = ChannelPublisher("rt/lowcmd", LowCmd_)
         self.lowcmd_publisher.Init()
-        
+
         self.lowstate_subscriber = ChannelSubscriber("rt/lowstate", LowState_)
         self.lowstate_subscriber.Init(self.state_callback, 10)
 
@@ -146,7 +150,7 @@ class LowLevelSineController:
                 self.low_cmd.motor_cmd[i].dq = 0.0
                 self.low_cmd.motor_cmd[i].kp = self.kp_hold
                 self.low_cmd.motor_cmd[i].kd = self.kd_hold
-            
+
             self.low_cmd.motor_cmd[i].tau = 0.0
 
         # 2. Set Wheel Motor Commands (index 12-15)
@@ -189,15 +193,15 @@ def main():
     args = parser.parse_args()
 
     controller = LowLevelSineController()
-    
+
     try:
         controller.init_clients(args.interface)
         controller.start_control_loop()
-        
+
         print("Sweeping FL_calf joint. Press Ctrl+C to stop...")
         while True:
             time.sleep(1.0)
-            
+
     except KeyboardInterrupt:
         print("\nKeyboard interrupt received.")
     finally:

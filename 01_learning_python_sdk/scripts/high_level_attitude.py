@@ -6,9 +6,10 @@ through roll, pitch, and yaw oscillations, disables attitude control, and lies d
 """
 
 import argparse
+import math
 import sys
 import time
-import math
+
 from unitree_sdk2py.core.channel import ChannelFactoryInitialize
 from unitree_sdk2py.go2.sport.sport_client import SportClient
 
