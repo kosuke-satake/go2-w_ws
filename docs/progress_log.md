@@ -4,6 +4,18 @@ This log documents the developmental milestones and configuration updates for th
 
 ---
 
+## [2026-06-05] - Phase 1: Locomotion Control & Telemetry Scripts
+*   **Milestone:** Completed custom high/low-level locomotion scripts, established CycloneDDS routing config, and verified linter configuration.
+*   **Details:**
+    *   Created `cyclonedds.xml` to bind DDS network traffic to the Wi-Fi network interface (`wlp0s20f3`) and peer directly with the Motion CPU and Jetson.
+    *   Corrected Python SDK library import paths from `unitree_sdk2` to `unitree_sdk2py` across all scripts.
+    *   Developed `01_learning_python_sdk/scripts/high_level_attitude.py` using the SportClient to stand the robot up and execute pitch, roll, and yaw sweeps.
+    *   Developed `01_learning_python_sdk/scripts/low_level_leg_sine.py` to command a single joint (FL_calf) in a safe sine wave sweep while holding other joints and wheels damped.
+    *   Configured `.vscode/settings.json` on the host and target to resolve Pylance import path resolution issues.
+    *   Structured project development under the task-oriented branch `feat/locomotion-telemetry`.
+
+---
+
 ## [2026-06-05] - Workspace Verification & SDK Installation
 *   **Milestone:** Fully configured and verified the Python SDK environment on the Ubuntu Thinkpad.
 *   **Details:**
