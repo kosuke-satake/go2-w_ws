@@ -1,21 +1,27 @@
 #!/usr/bin/env python3
 """
-Safe template script for low-level control of the Unitree Go2-W robot.
-This script demonstrates how to read joint encoder states (position, velocity)
-and structure target joint motor packets using the PD control law.
+Safe template script for low-level state query of the Unitree Go2-W robot.
+This script demonstrates how to subscribe to joint encoder states (position, velocity)
+safely using the ChannelSubscriber.
 """
 
 import argparse
-import sys
 import time
-from unitree_sdk2py.core.channel import ChannelFactoryInitialize
-from unitree_sdk2py.go2.low_level.low_state_client import LowStateClient
-# Note: In low-level control, commands are sent via a LowCmdClient
-from unitree_sdk2py.go2.low_level.low_cmd_client import LowCmdClient
+
+from unitree_sdk2py.core.channel import ChannelFactoryInitialize, ChannelSubscriber
+from unitree_sdk2py.idl.unitree_go.msg.dds_ import LowState_
+
+
+class LowStateReceiver:
+    def __init__(self):
+        self.latest_state = None
+
+    def state_callback(self, msg: LowState_):
+        self.latest_state = msg
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Go2-W Low-Level Joint State Query and PD Template")
+    parser = argparse.ArgumentParser(description="Go2-W Low-Level Joint State Query")
     parser.add_argument(
         "--interface",
         type=str,
@@ -29,41 +35,28 @@ def main():
     try:
         ChannelFactoryInitialize(0, args.interface)
     except Exception as e:
-        print(f"Error initializing ChannelFactory: {e}", file=sys.stderr)
-        sys.exit(1)
+        print(f"Error initializing ChannelFactory: {e}")
+        return
 
-    # 2. Initialize Low-level clients
-    # LowStateClient reads data, LowCmdClient sends motor control commands
-    low_state_client = LowStateClient()
-    low_state_client.Init()
-    
-    # 3. Read current state safely
+    # 2. Subscribe to Low State topic "rt/lowstate"
+    receiver = LowStateReceiver()
+    subscriber = ChannelSubscriber("rt/lowstate", LowState_)
+    subscriber.Init(receiver.state_callback, 10)
+
+    # 3. Read current state safely for 5 seconds
     print("Connecting to robot low-level state stream...")
     print("Reading joint positions (HAA, HFE, KFE) for 5 seconds (Safe Query Mode)...")
-    
-    # Mapping of 12 joints in Unitree SDK:
-    # 0: FR_hip, 1: FR_thigh, 2: FR_calf
-    # 3: FL_hip, 4: FL_thigh, 5: FL_calf
-    # 6: RR_hip, 7: RR_thigh, 8: RR_calf
-    # 9: RL_hip, 10: RL_thigh, 11: RL_calf
-    joint_names = [
-        "FR_hip", "FR_thigh", "FR_calf",
-        "FL_hip", "FL_thigh", "FL_calf",
-        "RR_hip", "RR_thigh", "RR_calf",
-        "RL_hip", "RL_thigh", "RL_calf"
-    ]
 
+    start_time = time.time()
     try:
-        start_time = time.time()
         while time.time() - start_time < 5.0:
-            # Fetch current state packet
-            state = low_state_client.GetLatestState()
+            state = receiver.latest_state
             if state is not None:
                 # Print motor states for Front Left (FL) Leg (joints 3, 4, 5)
                 fl_hip_pos = state.motor_state[3].q
                 fl_thigh_pos = state.motor_state[4].q
                 fl_calf_pos = state.motor_state[5].q
-                
+
                 print(
                     f"\rFL Leg Encoders -> Hip (HAA): {fl_hip_pos:6.3f} rad | "
                     f"Thigh (HFE): {fl_thigh_pos:6.3f} rad | "
