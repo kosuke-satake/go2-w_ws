@@ -8,6 +8,7 @@ to stand up, execute a slow forward walk, stop, and lie down.
 import argparse
 import sys
 import time
+
 from unitree_sdk2py.core.channel import ChannelFactoryInitialize
 from unitree_sdk2py.go2.sport.sport_client import SportClient
 
@@ -51,7 +52,7 @@ def main():
         # vx = 0.2 m/s (forward), vy = 0.0 m/s, vyaw = 0.0 rad/s
         print("Commanding robot to WALK FORWARD at 0.2 m/s...")
         sport_client.VelocityMove(0.2, 0.0, 0.0)
-        
+
         print("Walking for 4 seconds...")
         time.sleep(4.0)
 
