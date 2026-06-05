@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CycloneDDS xmlns="https://cdds.io/config">
+  <Domain id="any">
+    <General>
+      <!-- wlp0s20f3 is the Thinkpad Wi-Fi interface connected to the robot -->
+      <NetworkInterfaceAddress>wlp0s20f3</NetworkInterfaceAddress>
+      <AllowMulticast>true</AllowMulticast>
+    </General>
+    <Discovery>
+      <Peers>
+        <!-- Route unicast packets directly to the Motion CPU and Jetson -->
+        <Peer address="192.168.123.161"/>
+        <Peer address="192.168.123.15"/>
+      </Peers>
+    </Discovery>
+  </Domain>
+</CycloneDDS>
