@@ -64,5 +64,6 @@ The onboard wide-angle camera streams a 720p feed. The SDK provides a DDS-based 
 ---
 
 ## 5. Implementation Roadmap
-1.  **`01_learning_python_sdk/scripts/high_level_walk.py`:** Write a basic script to initialize the SDK client, command a transition to a standing state, execute a slow forward walking motion vector, and return to an idle stand.
-2.  **`01_learning_python_sdk/scripts/vision_feed.py`:** Write a script to capture the video stream, decode the frames, and display them in an OpenCV preview window.
+1.  **[high_level_walk.py](file:///Users/kosuke/Developer/Projects/go2-w/go2-w_ws/01_learning_python_sdk/scripts/high_level_walk.py):** Initializes the SportClient, commands the robot to stand, walks forward slowly, and stands down.
+2.  **[low_level_joint_pd.py](file:///Users/kosuke/Developer/Projects/go2-w/go2-w_ws/01_learning_python_sdk/scripts/low_level_joint_pd.py):** Queries the joint motor state stream safely and prints absolute encoder telemetry.
+

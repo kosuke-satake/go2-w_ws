@@ -62,25 +62,27 @@ A clean, production-grade `cyclonedds.xml` isolation template:
 
 ## 3. Workspace Management & Colcon Builds
 
-To build ROS 2 code, packages are organized in a workspace directory structure:
+To build ROS 2 packages, the source directories must be configured within a colcon workspace directory structure. In this directory, we start with a basic subscription model node:
+
 ```
-ros2_ws/
-├── src/
-│   ├── custom_interfaces/          # Custom message definitions
-│   └── go2_w_controller/           # Custom Python/C++ control node
+02_ros2_jazzy_middleware/
+├── README.md
+└── src/
+    └── odom_monitor.py             # Standard ROS 2 subscription node monitoring odometry
 ```
 
 ### Build Workflow
-Before building, you must source the underlying ROS 2 Jazzy environment:
+Before compiling, you must source the underlying ROS 2 Jazzy environment:
 ```bash
-source /opt/ros/jazzy/setup.zsh
+source /opt/ros/jazzy/setup.bash
 ```
 
-To compile and link the workspace, run `colcon build` from the workspace root:
+To compile your nodes, run `colcon build` from the package root:
 ```bash
 colcon build --symlink-install
 ```
-*   `--symlink-install` is highly recommended for Python nodes: it creates symbolic links to your scripts rather than copying them, allowing you to edit python files and run them instantly without re-compiling the workspace.
+*   `--symlink-install` is recommended for Python nodes: it creates symbolic links to your scripts rather than copying them, allowing you to edit python files and run them instantly without re-compiling the workspace.
+
 
 ---
 

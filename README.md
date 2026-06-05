@@ -1,27 +1,36 @@
 # Unitree Go2-W Wheeled-Quadruped Workspace
 
-This repository houses the learning progression, middleware configurations, and simulation environments for the **Unitree Go2-W hybrid wheeled-quadruped robot**. It is designed as a structured, step-by-step engineering framework transitioning from high-level Python API controls to low-level ROS 2 middleware, physics-based Gazebo simulations, and reinforcement learning (RL) policies using NVIDIA Isaac Lab.
+This repository houses the learning progression, middleware configurations, and simulation environments for the **Unitree Go2-W hybrid wheeled-quadruped robot**. It is designed as a structured, step-by-step engineering framework transitioning from high-level Python API controls to low-level ROS 2 middleware, physics-based Gazebo simulations, perception pipelines, reinforcement learning (RL) policies using NVIDIA Isaac Lab, and onboard deployment.
 
 ---
 
 ## Workspace Architecture
 
-The repository is structured into four distinct phases, allowing developers to isolate and verify components independently before integrating them on physical hardware:
+The repository is structured into six distinct phases and a detailed documentation directory:
 
 ```
 go2-w_ws/
-├── 01_learning_python_sdk/    # Phase 1: High-level sport & low-level joint motor API
+├── docs/                           # Detailed learning documentation & logs
+│   ├── progress_log.md             # Chronological journal of milestones
+│   └── notes/                      # Topic-specific technical reference logs
+├── 01_learning_python_sdk/         # Phase 1: High-level sport & low-level joint motor API
 │   ├── README.md
 │   └── scripts/
-├── 02_ros2_jazzy_middleware/  # Phase 2: ROS 2 Jazzy, DDS isolation, & custom driver nodes
+├── 02_ros2_jazzy_middleware/       # Phase 2: ROS 2 Jazzy, DDS isolation, & custom driver nodes
 │   ├── README.md
 │   └── src/
-├── 03_gazebo_simulation/      # Phase 3: URDF/Xacro rigid body models & joint controllers
+├── 03_gazebo_simulation/           # Phase 3: URDF/Xacro rigid body models & joint controllers
 │   ├── README.md
 │   └── urdf/
-└── 04_isaac_lab_rl/           # Phase 4: Isaac Lab environment configs & reward equations
+├── 04_isaac_lab_rl/                # Phase 4: Isaac Lab environment configs & reward equations
+│   ├── README.md
+│   └── envs/
+├── 05_perception_and_vision/       # Phase 5: 3D LiDAR point clouds & depth camera pipelines
+│   ├── README.md
+│   └── src/
+└── 06_onboard_deployment/          # Phase 6: Onboard Jetson Orin NX deployment & systemd services
     ├── README.md
-    └── envs/
+    └── config/
 ```
 
 ---
@@ -57,6 +66,14 @@ go2-w_ws/
 *   **Objective:** Train a custom legged-wheeled locomotion policy on the GPU.
 *   **Focus Areas:** Reinforcement learning MDP formulation (Observation/Action spaces), velocity-tracking reward functions, domain randomization, and ONNX deployment.
 
+### [Phase 5: Perception & Vision Pipelines](file:///Users/kosuke/Developer/Projects/go2-w/go2-w_ws/05_perception_and_vision/README.md)
+*   **Objective:** Process exteroceptive sensors for obstacle negotiation and visual servoing.
+*   **Focus Areas:** Ground-plane segmentation and voxel filtering of 3D LiDAR point clouds (`PointCloud2`), image transformations with OpenCV, and real-time object classification running YOLO.
+
+### [Phase 6: Onboard Jetson Deployment](file:///Users/kosuke/Developer/Projects/go2-w/go2-w_ws/06_onboard_deployment/README.md)
+*   **Objective:** Execute autonomous navigation and control models natively on the robot.
+*   **Focus Areas:** Onboard build targets, syncing local code via `rsync`, and configuring background Linux systemd services for automated startup at boot.
+
 ---
 
 ## Getting Started
@@ -71,6 +88,6 @@ source .venv/bin/activate
 ### 2. Install the Unitree SDK 2 Python Bindings
 Ensure CycloneDDS is compiled on your system, then install the SDK in editable mode:
 ```bash
-export CYCLONEDDS_HOME="/path/to/your/cyclonedds/install"
-pip install -e /path/to/unitree_sdk2_python
+export CYCLONEDDS_HOME="/home/user/cyclonedds/install"
+pip install -e ~/Developer/Projects/go2-w/unitree_sdk2_python
 ```
