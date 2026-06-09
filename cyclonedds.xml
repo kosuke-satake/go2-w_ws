@@ -14,5 +14,9 @@
         <Peer address="192.168.10.185"/>
       </Peers>
     </Discovery>
+    <Tracing>
+      <Verbosity>finest</Verbosity>
+      <OutputFile>/tmp/cdds_thinkpad.log</OutputFile>
+    </Tracing>
   </Domain>
 </CycloneDDS>
