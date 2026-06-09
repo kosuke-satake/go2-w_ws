@@ -8,7 +8,9 @@
     </General>
     <Discovery>
       <Peers>
-        <!-- Route unicast packets directly to the Robot's Jetson Wi-Fi IP -->
+        <!-- Route unicast packets directly to the Motion CPU and Jetson interfaces -->
+        <Peer address="192.168.123.161"/>
+        <Peer address="192.168.123.15"/>
         <Peer address="192.168.10.185"/>
       </Peers>
     </Discovery>
