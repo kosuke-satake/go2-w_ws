@@ -9,9 +9,7 @@
     </General>
     <Discovery>
       <Peers>
-        <!-- Route unicast packets directly to the Motion CPU and Jetson interfaces -->
-        <Peer address="192.168.123.161"/>
-        <Peer address="192.168.123.15"/>
+        <!-- Route unicast packets directly to the Jetson Wi-Fi IP on the same subnet -->
         <Peer address="192.168.10.185"/>
       </Peers>
     </Discovery>
